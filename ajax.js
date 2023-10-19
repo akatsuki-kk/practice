@@ -2,11 +2,13 @@
 
 //(1)とりあえず非同期でAjax通信
 $.ajax({
+    //リクエストをここに書く(typeはgetかpost。それ以外はdataの中に書く)
     type:'get/post',
-    url: URL,
+    url: '/api/nanika?doreka="hai"',
     data: {_method: 'get/post/patch/delete', id: id,}
 }).done(function(response){
     //responseにサーバーレスポンスが入る
+    //サーバーレスポンスはHTMLとかJSONとかある。
     //doneは通信成功時
 }).fail(function(response){
     //failは通信失敗時
@@ -26,8 +28,11 @@ async function foo(){
             //リクエスト
         }).done(function(response){
             //レスポンス
-            result = response
+            result = response;
         })
     })
+    return result["foo"];
 }
 
+//呼び出すときにawaitをつけると、ajaxの結果を取得してから返す。
+await foo();
