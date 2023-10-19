@@ -1,0 +1,31 @@
+version: '3'
+services:
+  web:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_HOST: postgres
+      LANG: 'ja'
+    ports:
+      - '3000:3000'
+    volumes:
+      - .:/web
+      - bundle:/usr/local/bundle
+  postgres:
+    image: postgres:12-alpine
+    ports:
+      - '15432:5432'
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8"
+    volumes:
+      - postgres:/var/lib/postgresql/data
+
+volumes:
+  bundle:
+    external: false
+  postgres:
